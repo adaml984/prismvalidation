@@ -6,23 +6,27 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="PrismTest.Views.MainPage"
-			 x:Name="mainPage"
+             x:Name="mainPage"
              Title="MainPage">
 	<ContentPage.Resources>
 		<ResourceDictionary>
-			<ControlTemplate x:Key="EntryErrorTemplate">
+			<ControlTemplate x:Key="ErrorTemplate">
 				<ContentView>
-					<StackLayout Orientation="Horizontal">
-						<BoxView Color="Red" 
-									   WidthRequest="48" 
-									   HeightRequest="48" />
-						<Entry Text="{Binding Title}" BindingContext="{Binding Source={x:Reference mainPage}, Path=BindingContext}" />
+					<StackLayout Orientation="Horizontal"
+					             WidthRequest="200">
+						<BoxView Color="Red"
+						         WidthRequest="48"
+						         HeightRequest="48" />
+						<Entry Text="{Binding Title}"
+						       BindingContext="{Binding Source={x:Reference mainPage}, Path=BindingContext}" />
 					</StackLayout>
 				</ContentView>
 			</ControlTemplate>
 			<ControlTemplate x:Key="EntryTemplate">
 				<ContentView>
-					<Entry Text="{Binding Title}" BindingContext="{Binding Source={x:Reference mainPage}, Path=BindingContext}" />
+					<Entry WidthRequest="200"
+					       Text="{Binding Title}"
+					       BindingContext="{Binding Source={x:Reference mainPage}, Path=BindingContext}" />
 				</ContentView>
 			</ControlTemplate>
 		</ResourceDictionary>
@@ -33,9 +37,11 @@
 		<TemplatedView ControlTemplate="{StaticResource EntryTemplate}">
 			<TemplatedView.Triggers>
 				<DataTrigger TargetType="TemplatedView"
-				         Binding="{Binding HasError}" BindingContext="{Binding Source={ x:Reference mainPage}, Path=BindingContext}"
-				         Value="True">
-					<Setter Property="ControlTemplate" Value="{StaticResource EntryErrorTemplate}"></Setter>
+				             Binding="{Binding HasError}"
+				             BindingContext="{Binding Source={ x:Reference mainPage}, Path=BindingContext}"
+				             Value="True">
+					<Setter Property="ControlTemplate"
+					        Value="{StaticResource ErrorTemplate}" />
 				</DataTrigger>
 			</TemplatedView.Triggers>
 
