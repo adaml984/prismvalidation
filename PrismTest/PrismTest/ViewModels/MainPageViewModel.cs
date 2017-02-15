@@ -1,9 +1,5 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using FluentValidation;
 
 namespace PrismTest.ViewModels
@@ -22,8 +18,7 @@ namespace PrismTest.ViewModels
 			set
 			{
 				SetProperty(ref _title, value);
-				var z = _validator.Validate(this);
-				HasError = !z.IsValid;
+				HasError = !_validator.Validate(this).IsValid;
 			}
 		}
 

@@ -5,46 +5,48 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
+			 xmlns:helpers="clr-namespace:PrismTest.Helpers"
              x:Class="PrismTest.Views.MainPage"
              x:Name="mainPage"
              Title="MainPage">
 	<ContentPage.Resources>
 		<ResourceDictionary>
 			<ControlTemplate x:Key="ErrorTemplate">
-				<ContentView>
-					<StackLayout Orientation="Horizontal"
-					             WidthRequest="200">
-						<BoxView Color="Red"
-						         WidthRequest="48"
-						         HeightRequest="48" />
-						<Entry Text="{Binding Title}"
-						       BindingContext="{Binding Source={x:Reference mainPage}, Path=BindingContext}" />
-					</StackLayout>
-				</ContentView>
+				<StackLayout Orientation="Horizontal" InputTransparent="False">
+					<Entry Text="{Binding Title}" WidthRequest="184" helpers:FocusHelper.FocusedElement="True"  
+					       BindingContext="{Binding Source={x:Reference mainPage}, Path=BindingContext}" />
+					<BoxView Color="Red" x:Name="errorIndicator"
+					         HorizontalOptions="Center"
+					         VerticalOptions="Center"
+					         WidthRequest="16"
+					         HeightRequest="16" />
+				</StackLayout>
 			</ControlTemplate>
 			<ControlTemplate x:Key="EntryTemplate">
-				<ContentView>
-					<Entry WidthRequest="200"
-					       Text="{Binding Title}"
-					       BindingContext="{Binding Source={x:Reference mainPage}, Path=BindingContext}" />
-				</ContentView>
+				<Entry WidthRequest="200" helpers:FocusHelper.FocusedElement="True"
+				       Text="{Binding Title}" BindingContext="{Binding Source={x:Reference mainPage}, Path=BindingContext}" />
 			</ControlTemplate>
 		</ResourceDictionary>
 	</ContentPage.Resources>
 	<StackLayout HorizontalOptions="Center"
 	             VerticalOptions="Center">
-
 		<TemplatedView ControlTemplate="{StaticResource EntryTemplate}">
 			<TemplatedView.Triggers>
 				<DataTrigger TargetType="TemplatedView"
 				             Binding="{Binding HasError}"
-				             BindingContext="{Binding Source={ x:Reference mainPage}, Path=BindingContext}"
+				             BindingContext="{Binding Source={x:Reference mainPage}, Path=BindingContext}"
 				             Value="True">
 					<Setter Property="ControlTemplate"
 					        Value="{StaticResource ErrorTemplate}" />
 				</DataTrigger>
+				<DataTrigger TargetType="TemplatedView"
+				             Binding="{Binding HasError}"
+				             BindingContext="{Binding Source={x:Reference mainPage}, Path=BindingContext}"
+				             Value="False">
+					<Setter Property="ControlTemplate"
+					        Value="{StaticResource EntryTemplate}" />
+				</DataTrigger>
 			</TemplatedView.Triggers>
-
 		</TemplatedView>
 	</StackLayout>
 </ContentPage>
