@@ -8,6 +8,5 @@ namespace PrismTest.Views
 		{
 			InitializeComponent();
 		}
-
 	}
 }
